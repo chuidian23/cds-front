@@ -134,7 +134,7 @@ const AdminDashboard = () => {
   const handleReject = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/admin/enrollments/${selectedEnrollment.id}`,
+        `https://cds-backend.onrender.com/api/admin/enrollments/${selectedEnrollment.id}`,
         {
           method: "DELETE",
           headers: {
