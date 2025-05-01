@@ -14,7 +14,7 @@ const AdminLogin = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://https://cds-backend.onrender.com/api/admin/login",
+        "https://cds-backend.onrender.com/api/admin/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

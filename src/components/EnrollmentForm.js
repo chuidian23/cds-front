@@ -237,10 +237,21 @@ function EnrollmentForm() {
         formDataToSend.append("receipt", receiptFile);
       }
 
-      const response = await axios.post(
-        "https://cds-backend.onrender.com/api/enrollments",
-        formDataToSend
-      );
+      const response = await axios
+        .post(
+          "https://cds-backend.onrender.com/api/enrollments",
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .catch((error) => {
+          console.error("Detailed error:", error);
+          alert(`Submission failed: ${error.message}`);
+          throw error;
+        });
 
       if (response.data.success) {
         alert("Enrollment and payment submitted successfully!");
