@@ -1,6 +1,11 @@
 {
+  "headers": {
+    "/*": {
+      "Cache-Control": "no-cache, no-store, must-revalidate"
+    }
+  },
   "rewrites": [
     { "source": "/admin/**", "destination": "/index.html" },
-    { "source": "**", "destination": "/index.html" }
+    { "source": "/*", "destination": "/index.html" }
   ]
 }

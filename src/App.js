@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Navigate,
@@ -31,6 +31,7 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 
   if (!token) {
+    // Redirect to login BUT preserve the intended location
     return <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
   return children;
@@ -52,30 +53,20 @@ function App() {
             <Route path="/enroll" element={<EnrollmentForm />} />
 
             {/* Admin Routes */}
-            <Route path="/admin">
-              <Route
-                path="login"
-                element={
-                  <div className="admin-route-container">
-                    <AdminLogin />
-                  </div>
-                }
-              />
-              <Route
-                path="dashboard"
-                element={
-                  <div className="admin-route-container">
-                    <ProtectedRoute>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  </div>
-                }
-              />
-              <Route index element={<Navigate to="login" replace />} />
-            </Route>
-
-            {/* Catch-all route */}
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={<Navigate to="/admin/login" replace />}
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
 

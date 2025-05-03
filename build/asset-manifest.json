@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.234afecd.css",
+    "main.js": "/static/js/main.fec26db8.js",
+    "static/media/hero-image.png": "/static/media/hero-image.7166c4a5008fff6d614b.png",
+    "static/media/about-image.png": "/static/media/about-image.13bacd7755c63bf78fc5.png",
+    "static/media/student5.jpg": "/static/media/student5.7346e428eca73e10ae10.jpg",
+    "static/media/student6.jpg": "/static/media/student6.949f3b2624b578a0affc.jpg",
+    "static/media/student1.jpg": "/static/media/student1.334222e3dcd9597011b4.jpg",
+    "static/media/student2.jpg": "/static/media/student2.2fd2fcb781586072f7d9.jpg",
+    "static/media/student4.jpg": "/static/media/student4.329218413fd3b4e83261.jpg",
+    "static/media/student3.jpg": "/static/media/student3.30c8f43d02afdc994cfa.jpg",
+    "static/media/testimonial3.jpg": "/static/media/testimonial3.4f747548cc02e85258de.jpg",
+    "static/media/testimonial4.jpg": "/static/media/testimonial4.b852261ac1f1a49de426.jpg",
+    "static/media/testimonial5.jpg": "/static/media/testimonial5.f4f8916492cf10fc1efd.jpg",
+    "static/media/testimonial2.jpg": "/static/media/testimonial2.b829b55f845d8635e659.jpg",
+    "static/media/testimonial1.jpg": "/static/media/testimonial1.e1179e9eeb9b5b64830a.jpg",
+    "static/media/cds-logo.png": "/static/media/cds-logo.dd087f532b1a77cbb94c.png",
+    "index.html": "/index.html",
+    "main.234afecd.css.map": "/static/css/main.234afecd.css.map",
+    "main.fec26db8.js.map": "/static/js/main.fec26db8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.234afecd.css",
+    "static/js/main.fec26db8.js"
+  ]
+}
