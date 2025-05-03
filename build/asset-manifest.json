@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.234afecd.css",
-    "main.js": "/static/js/main.fec26db8.js",
+    "main.js": "/static/js/main.94ef27e3.js",
     "static/media/hero-image.png": "/static/media/hero-image.7166c4a5008fff6d614b.png",
     "static/media/about-image.png": "/static/media/about-image.13bacd7755c63bf78fc5.png",
     "static/media/student5.jpg": "/static/media/student5.7346e428eca73e10ae10.jpg",
@@ -18,10 +18,10 @@
     "static/media/cds-logo.png": "/static/media/cds-logo.dd087f532b1a77cbb94c.png",
     "index.html": "/index.html",
     "main.234afecd.css.map": "/static/css/main.234afecd.css.map",
-    "main.fec26db8.js.map": "/static/js/main.fec26db8.js.map"
+    "main.94ef27e3.js.map": "/static/js/main.94ef27e3.js.map"
   },
   "entrypoints": [
     "static/css/main.234afecd.css",
-    "static/js/main.fec26db8.js"
+    "static/js/main.94ef27e3.js"
   ]
 }

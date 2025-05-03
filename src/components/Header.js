@@ -90,33 +90,63 @@ const Header = () => {
             ) : (
               // Full navigation for other pages
               <>
-                <Link className="navLink" to="/">
+                <Link
+                  className="navLink"
+                  to="/"
+                  onClick={(e) => {
+                    if (location.pathname === "/") {
+                      e.preventDefault();
+                      window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                >
                   Home
                 </Link>
                 <Link
                   className="navLink"
                   to={{ pathname: "/", hash: "#about" }}
-                  onClick={(e) =>
-                    location.pathname === "/" && e.preventDefault()
-                  }
+                  onClick={(e) => {
+                    if (location.pathname === "/") {
+                      e.preventDefault();
+                      document.querySelector("#about")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }
+                  }}
                 >
                   About Us
                 </Link>
                 <Link
                   className="navLink"
                   to={{ pathname: "/", hash: "#testimonials" }}
-                  onClick={(e) =>
-                    location.pathname === "/" && e.preventDefault()
-                  }
+                  onClick={(e) => {
+                    if (location.pathname === "/") {
+                      e.preventDefault();
+                      document.querySelector("#testimonials")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }
+                  }}
                 >
                   Testimonials
                 </Link>
                 <Link
                   className="navLink"
                   to={{ pathname: "/", hash: "#gallery" }}
-                  onClick={(e) =>
-                    location.pathname === "/" && e.preventDefault()
-                  }
+                  onClick={(e) => {
+                    if (location.pathname === "/") {
+                      e.preventDefault();
+                      document.querySelector("#gallery")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }
+                  }}
                 >
                   Gallery
                 </Link>

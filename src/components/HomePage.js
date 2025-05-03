@@ -72,12 +72,30 @@ const HomePage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+    const scrollHandler = () => {
+      const hash = location.hash;
+
+      if (hash) {
+        // Handle section scroll
+        setTimeout(() => {
+          const element = document.querySelector(hash);
+          if (element) {
+            element.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }, 100);
+      } else {
+        // Handle home scroll
+        window.scrollTo({
+          top: 0,
+          behavior: "auto",
+        });
       }
-    }
+    };
+
+    scrollHandler();
   }, [location]);
 
   const [selectedImage, setSelectedImage] = useState(null);
