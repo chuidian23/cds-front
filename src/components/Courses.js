@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Course.css"; // Create this new CSS file
 
 const Courses = () => {
   const courseCategories = [
@@ -71,7 +72,7 @@ const Courses = () => {
       courses: [
         {
           id: 5,
-          name: "Manual Refresher",
+          name: "MT-Refresher",
           type: "manual-refresher",
           scheduleType: "half-day",
           sessionsRequired: 2,
@@ -81,7 +82,7 @@ const Courses = () => {
         },
         {
           id: 6,
-          name: "Manual Intermediate",
+          name: "MT-Intermediate",
           type: "manual-intermediate",
           scheduleType: "half-day",
           sessionsRequired: 3,
@@ -91,7 +92,7 @@ const Courses = () => {
         },
         {
           id: 7,
-          name: "Manual Beginner",
+          name: "MT-Beginner",
           type: "manual-beginner",
           scheduleType: "half-day",
           sessionsRequired: 5,
@@ -106,32 +107,32 @@ const Courses = () => {
       courses: [
         {
           id: 8,
-          name: "Automatic Refresher",
+          name: "AT-Refresher",
           type: "automatic-refresher",
           scheduleType: "half-day",
           sessionsRequired: 2,
-          price: "₱4,000",
+          price: "₱5,000",
           duration: "8 hours",
           requirements: ["Student Permit", "Medical Certificate"],
         },
         {
           id: 9,
-          name: "Automatic Intermediate",
+          name: "AT-Intermediate",
           type: "automatic-intermediate",
           scheduleType: "half-day",
           sessionsRequired: 3,
-          price: "₱4,000",
-          duration: "8 hours",
+          price: "₱7,000",
+          duration: "12 hours",
           requirements: ["Student Permit", "Medical Certificate"],
         },
         {
           id: 10,
-          name: "Automatic Beginner",
+          name: "AT-Beginner",
           type: "automatic-beginner",
           scheduleType: "half-day",
           sessionsRequired: 5,
-          price: "₱4,000",
-          duration: "8 hours",
+          price: "₱12,000",
+          duration: "20 hours",
           requirements: ["Student Permit", "Medical Certificate"],
         },
       ],
@@ -141,10 +142,10 @@ const Courses = () => {
   return (
     <div className="courses-page container py-5">
       <header className="text-center mb-5">
-        <h1 className="display-4 fw-bold text-primary mb-3">
+        <h1 className="display-4 fw-bold text-yellow mb-3">
           Available Driving Courses
         </h1>
-        <p className="lead text-muted">
+        <p className="lead text-dark">
           Choose the perfect program for your driving journey
         </p>
       </header>
@@ -152,36 +153,42 @@ const Courses = () => {
       {courseCategories.map((category) => (
         <section key={category.name} className="category-section mb-5">
           <div className="category-header mb-4 p-3 rounded">
-            <h2 className="category-title mb-0 fw-bold">{category.name}</h2>
+            <h2 className="category-title mb-0 fw-bold text-dark">
+              {category.name}
+            </h2>
           </div>
 
           <div className="row g-4">
             {category.courses.map((course) => (
               <div key={course.id} className="col-md-6 col-lg-4">
-                <div className="course-card h-100 shadow-sm">
+                <div className="course-card h-100 shadow-sm bg-white border border-yellow">
                   <div className="card-body p-4">
                     <div className="d-flex justify-content-between align-items-start mb-3">
-                      <h3 className="card-title fw-bold mb-0">{course.name}</h3>
-                      <span className="badge bg-primary">{course.price}</span>
+                      <h3 className="card-title fw-bold mb-0 text-dark">
+                        {course.name}
+                      </h3>
+                      <span className="badge bg-yellow text-dark">
+                        {course.price}
+                      </span>
                     </div>
 
                     <div className="course-details mb-3">
                       <div className="d-flex justify-content-between">
                         <span className="text-muted">
-                          <i className="fas fa-clock me-2"></i>
+                          <i className="fas fa-clock me-2 text-yellow"></i>
                           {course.duration}
                         </span>
                       </div>
                     </div>
 
                     <div className="requirements">
-                      <h4 className="text-secondary fs-6 fw-bold mb-3">
+                      <h4 className="text-yellow fs-6 fw-bold mb-3">
                         Requirements:
                       </h4>
                       <ul className="list-unstyled">
                         {course.requirements?.map((req, index) => (
-                          <li key={index} className="d-flex mb-2">
-                            <i className="fas fa-check-circle text-success me-2 mt-1"></i>
+                          <li key={index} className="d-flex mb-2 text-dark">
+                            <i className="fas fa-check-circle text-yellow me-2 mt-1"></i>
                             {req}
                           </li>
                         ))}

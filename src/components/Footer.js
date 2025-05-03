@@ -1,47 +1,55 @@
 import React from "react";
-import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaTiktok, FaYoutube } from "react-icons/fa"; // Changed from FaInstagram to FaTiktok
+import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white py-4">
+    <footer className="footer bg-black text-white py-5">
       <div className="container">
         <div className="row align-items-center">
-          <div className="col-md-6 text-center text-md-start">
-            <p className="mb-1">
-              © {new Date().getFullYear()} Car-vinne Driving School. All rights
-              reserved.
-            </p>
-            <p className="mb-0">
-              Contact: carvinnedrivingschool@gmail.com
-              <br className="d-md-none" />
-              <span className="d-none d-md-inline"> | </span>
-              0967 298 8130 (G) | 0949 724 2329 (S)
-            </p>
+          <div className="col-md-6 text-center text-md-start mb-4 mb-md-0">
+            <div className="footer-content">
+              <h5 className="footer-heading text-warning mb-3">
+                Car-vinne Driving School
+              </h5>
+              <p className="mb-1">
+                © {new Date().getFullYear()} All rights reserved.
+              </p>
+              <p className="mb-1">
+                <span className="text-warning">Email:</span>{" "}
+                carvinnedrivingschool@gmail.com
+              </p>
+              <p className="mb-0">
+                <span className="text-warning">Contact:</span> 0967 298 8130 (G)
+                | 0949 724 2329 (S)
+              </p>
+            </div>
           </div>
 
-          <div className="col-md-6 text-center text-md-end mt-3 mt-md-0">
+          <div className="col-md-6 text-center text-md-end">
             <div className="social-icons">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white mx-2"
+                className="social-link"
               >
                 <FaFacebook size={24} />
               </a>
+              {/* Changed Instagram to TikTok */}
               <a
-                href="https://instagram.com"
+                href="https://tiktok.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white mx-2"
+                className="social-link"
               >
-                <FaInstagram size={24} />
+                <FaTiktok size={24} />
               </a>
               <a
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white mx-2"
+                className="social-link"
               >
                 <FaYoutube size={24} />
               </a>

@@ -1,0 +1,142 @@
+/* Header.css */
+.headerNav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  padding: 0.8rem 0;
+  border-bottom: 2px solid #ffd700;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.headerNav.scrolled {
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.headerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLogo {
+  height: 60px;
+  transition: transform 0.3s ease;
+}
+
+.headerLogo:hover {
+  transform: scale(1.05);
+}
+
+.navMenu {
+  gap: 2rem;
+}
+
+.navLink {
+  color: #000000 !important;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navLink::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: #ffd700;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navLink:hover::before {
+  width: calc(100% - 2rem);
+}
+
+.navLink:hover {
+  transform: translateY(-2px);
+}
+
+.navLink.active {
+  color: #ffd700 !important;
+}
+
+.enrollButton {
+  background-color: #ffd700;
+  color: #000000 !important;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.enrollButton:hover {
+  background-color: #000000;
+  color: #ffd700 !important;
+  border-color: #ffd700;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Mobile Menu Toggle */
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23000' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+}
+
+@media (max-width: 992px) {
+  .headerLogo {
+    height: 50px;
+  }
+
+  .navMenu {
+    background-color: #ffffff !important;
+    padding: 1rem;
+    border-top: 2px solid #ffd700;
+    margin-top: 0.5rem;
+  }
+
+  .navLink {
+    padding: 0.8rem 0;
+    text-align: center;
+  }
+
+  .enrollButton {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem 1rem; /* Adjust padding for mobile */
+    text-align: center; /* Add text alignment */
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23000' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  .navMenu.navbar-nav {
+    align-items: center;
+  }
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+}

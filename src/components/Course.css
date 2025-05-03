@@ -1,0 +1,76 @@
+/* Courses.css */
+.text-yellow {
+  color: #ffd700 !important;
+}
+
+.bg-yellow {
+  background-color: #ffd700 !important;
+}
+
+.border-yellow {
+  border-color: #ffd700 !important;
+}
+
+.courses-page {
+  background-color: #f8f9fa; /* Light gray background for courses section */
+  min-height: 100vh;
+}
+
+.course-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  background: white;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-enroll {
+  background-color: #ffd700 !important; /* Yellow background */
+  color: #000 !important; /* Black text */
+  border: 2px solid #ffd700;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-enroll:hover {
+  background-color: #000 !important; /* Black background on hover */
+  color: #ffd700 !important; /* Yellow text on hover */
+  border-color: #000; /* Black border on hover */
+}
+
+.category-header {
+  background-color: rgba(255, 215, 0, 0.1);
+  border-left: 4px solid #ffd700;
+}
+
+/* Add these new styles */
+body {
+  background-color: #353434 !important;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.course-card {
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.requirements li {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .courses-page {
+    padding: 2rem 0;
+  }
+
+  .category-title {
+    font-size: 1.25rem;
+  }
+}

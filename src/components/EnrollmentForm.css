@@ -1,0 +1,258 @@
+/* Custom Theme Styles */
+.enrollment-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.theme-heading {
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.theme-heading::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: #ffd700;
+}
+
+.theme-subheading {
+  color: #666;
+}
+
+.theme-section-heading {
+  color: #000;
+  padding-left: 10px;
+  border-left: 4px solid #ffd700;
+}
+
+.theme-divider {
+  border-color: #ffd700;
+  border-width: 2px;
+  opacity: 1;
+}
+
+.theme-icon {
+  color: #ffd700;
+}
+
+.form-control:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25);
+}
+
+.theme-btn-primary {
+  background: #ffd700;
+  color: #000;
+  border: 2px solid #000;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.theme-btn-primary:hover {
+  background: #000;
+  color: #ffd700;
+  border-color: #ffd700;
+}
+
+.theme-btn-secondary {
+  background: #000;
+  color: #ffd700;
+  border: 2px solid #ffd700;
+}
+
+.theme-btn-secondary:hover {
+  background: #ffd700;
+  color: #000;
+}
+
+.theme-alert {
+  background: rgba(255, 215, 0, 0.15);
+  border: 2px solid #ffd700;
+  color: #000;
+}
+
+/* Date Picker Customization */
+.react-datepicker {
+  border: 2px solid #000;
+}
+
+.react-datepicker__header {
+  background-color: #ffd700;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  color: #000 !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #000;
+  color: #ffd700;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+.form-select:focus {
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25) !important;
+}
+
+.form-control:focus {
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25) !important;
+}
+
+/* Label styling */
+.enrollment-container .form-label {
+  font-weight: 600;
+  color: #000;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.enrollment-container .form-label::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: #ffd700;
+}
+
+/* Required field indicators */
+.enrollment-container .form-label[required]::before {
+  content: "*";
+  color: #ff0000;
+  margin-right: 4px;
+}
+.theme-payment-title {
+  font-size: 1.25rem;
+  border-bottom: 2px solid #ffd700;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.theme-payment-title span {
+  font-size: 0.9em;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+/* Date Picker Customization */
+.react-datepicker {
+  border: 2px solid #000;
+  font-family: inherit;
+}
+
+.react-datepicker__header {
+  background-color: #ffd700 !important;
+  border-bottom: 2px solid #000;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  color: #000 !important;
+  font-weight: 600;
+}
+
+.react-datepicker__day--selected {
+  background-color: #000 !important;
+  color: #ffd700 !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: #000 !important;
+}
+
+.react-datepicker__navigation {
+  top: 10px;
+  border-color: #000;
+}
+
+.react-datepicker__month-dropdown,
+.react-datepicker__year-dropdown {
+  background: #fff;
+  border: 2px solid #000;
+}
+.btn.theme-btn-primary {
+  background: #ffd700 !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+  padding: 0.5rem 1.5rem;
+}
+
+.btn.theme-btn-primary:hover {
+  background: #000 !important;
+  color: #ffd700 !important;
+  border-color: #ffd700 !important;
+}
+
+.btn.theme-btn-secondary {
+  background: #000 !important;
+  color: #ffd700 !important;
+  border: 2px solid #ffd700 !important;
+  padding: 0.5rem 1.5rem;
+}
+
+.btn.theme-btn-secondary:hover {
+  background: #ffd700 !important;
+  color: #000 !important;
+}
+
+/* Selected course styling */
+.selected-course.alert.theme-alert {
+  background: rgba(255, 215, 0, 0.25) !important;
+  border: 2px solid #ffd700 !important;
+  color: #000;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Form control styling */
+
+.form-control:disabled {
+  background: #f8f9fa !important;
+}
+
+/* Date picker input */
+
+/* Payment method select */
+
+/* Step buttons container */
+.payment-step .col-12.text-center {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Make sure labels are visible */
+.form-label {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* Course selection message */
+.selected-course div.mt-2 {
+  color: #333;
+  font-size: 0.9em;
+  line-height: 1.4;
+}

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { Chart, registerables } from "chart.js";
 import { Button, Container, Alert, Modal, Card, Image } from "react-bootstrap";
-import "../App.css";
+import "./AdminDashboard.css";
 
 Chart.register(...registerables);
 
@@ -18,17 +18,23 @@ const AdminDashboard = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
-      field: "name",
-      headerName: "Name",
-      width: 200,
-      valueGetter: (params) =>
-        // Add optional chaining for params.row
-        `${params?.row?.first_name || ""} ${params?.row?.last_name || ""}`,
+      field: "first_name", // Use actual field name from your data
+      headerName: "First Name",
+      width: 150,
     },
-    { field: "course", headerName: "Course", width: 200 },
+    {
+      field: "last_name", // Use actual field name from your data
+      headerName: "Last Name",
+      width: 150,
+    },
+    {
+      field: "course",
+      headerName: "Course",
+      width: 200,
+    },
     {
       field: "status",
-      headerName: "Payment Status",
+      headerName: "Status",
       width: 150,
       renderCell: (params) => (
         <span
@@ -50,7 +56,6 @@ const AdminDashboard = () => {
           variant="info"
           size="sm"
           onClick={() => {
-            // Check if params.row exists before using it
             if (params?.row) {
               setSelectedEnrollment(params.row);
               setShowDetails(true);
@@ -73,19 +78,19 @@ const AdminDashboard = () => {
         }
 
         const enrollRes = await fetch(
-          "https://cds-backend.onrender.com/api/admin/enrollments",
+          "http://localhost:3001/api/admin/enrollments",
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           }
         );
 
         if (!enrollRes.ok) throw new Error("Failed to fetch enrollments");
 
-        setEnrollments(
-          (await enrollRes.json()).filter(
-            (item) => item.id && item.first_name && item.last_name
-          )
-        );
+        const data = await enrollRes.json();
+        setEnrollments(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -97,14 +102,16 @@ const AdminDashboard = () => {
   }, [navigate, showDetails]); // Refresh when modal closes
 
   const handleStatusUpdate = async () => {
+    if (!selectedEnrollment?.id) return;
+
     try {
       const response = await fetch(
-        `https://cds-backend.onrender.com/api/admin/enrollments/${selectedEnrollment.id}`,
+        `http://localhost:3001/api/admin/enrollments/${selectedEnrollment.id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${sessionStorage.getItem("adminToken")}`, // Fix the quote mismatch here
+            Authorization: `Bearer ${sessionStorage.getItem("adminToken")}`,
           },
           body: JSON.stringify({ status: "successful" }),
         }
@@ -132,9 +139,11 @@ const AdminDashboard = () => {
 
   // In the handleReject function, modify to:
   const handleReject = async () => {
+    if (!selectedEnrollment?.id) return;
+
     try {
       const response = await fetch(
-        `https://cds-backend.onrender.com/api/admin/enrollments/${selectedEnrollment.id}`,
+        `http://localhost:3001/api/admin/enrollments/${selectedEnrollment.id}`,
         {
           method: "DELETE",
           headers: {
@@ -159,7 +168,7 @@ const AdminDashboard = () => {
   if (loading) return <div className="text-center mt-5">Loading...</div>;
 
   return (
-    <Container className="admin-dashboard-container">
+    <Container className="admin-dashboard-container flex-grow-1">
       {error && (
         <Alert variant="danger" onClose={() => setError("")} dismissible>
           {error}
@@ -179,7 +188,12 @@ const AdminDashboard = () => {
       </div>
 
       {/* Details Modal */}
-      <Modal show={showDetails} onHide={() => setShowDetails(false)} size="lg">
+      <Modal
+        show={showDetails}
+        onHide={() => setShowDetails(false)}
+        size="lg"
+        className="enrollment-modal"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Enrollment Details</Modal.Title>
         </Modal.Header>
@@ -283,28 +297,53 @@ const AdminDashboard = () => {
                         <strong>Payment Method:</strong>{" "}
                         {selectedEnrollment.payment_method}
                       </p>
-                      {selectedEnrollment.receipt && (
-                        <Image
-                          src={`https://cds-backend.onrender.com/${selectedEnrollment.receipt?.replace(
-                            /\\/g,
-                            "/"
-                          )}`}
-                          fluid
-                          className="mb-3"
-                          style={{ maxHeight: "300px", objectFit: "contain" }}
-                        />
+                      {selectedEnrollment?.receipt ? (
+                        <>
+                          <Image
+                            src={`http://localhost:3001/${selectedEnrollment.receipt.replace(
+                              /\\/g,
+                              "/"
+                            )}`}
+                            fluid
+                            className="mb-3"
+                            style={{ maxHeight: "300px", objectFit: "contain" }}
+                          />
+                          <p className="text-muted small">Payment Receipt</p>
+                        </>
+                      ) : (
+                        <p className="text-danger">Missing payment receipt!</p>
                       )}
-                      <div className="d-flex gap-2 mt-3">
-                        <Button
-                          variant="success"
-                          onClick={handleStatusUpdate} // Removed the parameter here
-                        >
+                      <div className="action-buttons">
+                        <Button variant="success" onClick={handleStatusUpdate}>
                           Accept Payment
                         </Button>
                         <Button variant="danger" onClick={handleReject}>
                           Reject Enrollment
                         </Button>
                       </div>
+                    </Card.Body>
+                  </Card>
+
+                  {/* Student Permit Section */}
+                  <Card className="mt-3">
+                    <Card.Body>
+                      <Card.Title>Student Permit</Card.Title>
+                      {selectedEnrollment?.student_permit ? (
+                        <>
+                          <Image
+                            src={`http://localhost:3001/${selectedEnrollment.student_permit.replace(
+                              /\\/g,
+                              "/"
+                            )}`}
+                            fluid
+                            className="mb-3"
+                            style={{ maxHeight: "300px", objectFit: "contain" }}
+                          />
+                          <p className="text-muted small">Student Permit</p>
+                        </>
+                      ) : (
+                        <p className="text-muted">No student permit required</p>
+                      )}
                     </Card.Body>
                   </Card>
                 </div>

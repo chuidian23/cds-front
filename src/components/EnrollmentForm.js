@@ -9,8 +9,8 @@ import {
   FaCalendarAlt,
   FaMoneyBillWave,
 } from "react-icons/fa";
-import "../App.css";
 import axios from "axios";
+import "./EnrollmentForm.css";
 
 function EnrollmentForm() {
   const location = useLocation();
@@ -21,6 +21,7 @@ function EnrollmentForm() {
   };
   const [currentStep, setCurrentStep] = useState(1);
   const [receiptFile, setReceiptFile] = useState(null);
+  const [studentPermitFile, setStudentPermitFile] = useState(null);
 
   // Memoized course schedule configuration
   const courseScheduleConfig = useMemo(
@@ -31,66 +32,76 @@ function EnrollmentForm() {
         message: "Fixed Schedule: Saturday (8am-5pm) and Monday (8am-5pm)",
         days: [6, 1], // Saturday (6), Monday (1)
         time: "8:00-17:00",
+        price: "₱1,000",
       },
       "OTDC (Self-Paced)": {
         type: "self-paced",
         inputs: Array(1).fill(), // 1 session for start date
         message: "Self-paced course to be completed within 30 days",
         time: "8:00-17:00",
+        price: "₱1,500",
       },
       "Motorcycle Refresher": {
         type: "whole-day",
         inputs: Array(1).fill(),
         message: "Full day training (8am-5pm)",
         time: "8:00-17:00",
+        price: "₱2,500",
       },
       "Motorcycle Beginner": {
         type: "whole-day",
         inputs: Array(2).fill(),
         message: "Two full day sessions (8am-5pm)",
         time: "8:00-17:00", // Add fixed time
+        price: "₱4,000",
       },
-      "Manual Refresher": {
+      "MT-Refresher": {
         type: "half-day",
         inputs: Array(2)
           .fill()
           .map(() => ({ timeOptions: ["8:00-12:00", "13:00-17:00"] })),
         message: "Select your preferred time slot for each session",
+        price: "₱4,000",
       },
-      "Manual Intermediate": {
+      "MT-Intermediate": {
         type: "half-day",
         inputs: Array(3)
           .fill()
           .map(() => ({ timeOptions: ["8:00-12:00", "13:00-17:00"] })),
         message: "Select your preferred time slot for each session",
+        price: "₱6,000",
       },
-      "Manual Beginner": {
+      "MT-Beginner": {
         type: "half-day",
         inputs: Array(5)
           .fill()
           .map(() => ({ timeOptions: ["8:00-12:00", "13:00-17:00"] })),
         message: "Select your preferred time slot for each session",
+        price: "₱10,000",
       },
-      "Automatic Refresher": {
+      "AT-Refresher": {
         type: "half-day",
         inputs: Array(2)
           .fill()
           .map(() => ({ timeOptions: ["8:00-12:00", "13:00-17:00"] })),
         message: "Select your preferred time slot for each session",
+        price: "₱5,000",
       },
-      "Automatic Intermediate": {
+      "AT-Intermediate": {
         type: "half-day",
         inputs: Array(3)
           .fill()
           .map(() => ({ timeOptions: ["8:00-12:00", "13:00-17:00"] })),
         message: "Select your preferred time slot for each session",
+        price: "₱7,000",
       },
-      "Automatic Beginner": {
+      "AT-Beginner": {
         type: "half-day",
         inputs: Array(5)
           .fill()
           .map(() => ({ timeOptions: ["8:00-12:00", "13:00-17:00"] })),
         message: "Select your preferred time slot for each session",
+        price: "₱12,000",
       },
     }),
     []
@@ -175,6 +186,22 @@ function EnrollmentForm() {
     }));
   };
 
+  const calculateAge = (birthdate) => {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    // Adjust age if birthday hasn't occurred yet this year
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -190,7 +217,6 @@ function EnrollmentForm() {
       }
       // Validation for other courses
       else {
-        // Replace the existing validation with this block
         const invalidSessions = formData.schedule.filter((session) => {
           if (selectedCourse.startsWith("Motorcycle")) {
             return !session.date;
@@ -203,95 +229,149 @@ function EnrollmentForm() {
           return;
         }
       }
+
+      // Age validation
+      if (!formData.birthdate) {
+        alert("Please enter your birthdate");
+        return;
+      }
+
+      const age = calculateAge(formData.birthdate);
+      const minAge = ["TDC (Face to Face)", "OTDC (Self-Paced)"].includes(
+        selectedCourse
+      )
+        ? 16
+        : 17;
+
+      if (age < minAge) {
+        alert(
+          `You must be at least ${minAge} years old to enroll in ${selectedCourse}`
+        );
+        return;
+      }
+
+      // All validations passed, move to next step
       setCurrentStep(2);
       return;
     }
 
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("lastName", formData.lastName);
-      formDataToSend.append("firstName", formData.firstName);
-      formDataToSend.append("middleName", formData.middleName);
-      formDataToSend.append("birthdate", formData.birthdate);
-      formDataToSend.append("gender", formData.gender);
-      formDataToSend.append("civilStatus", formData.civilStatus);
-      formDataToSend.append("mobilePhone", formData.mobilePhone);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("course", formData.course);
-      formDataToSend.append("paymentMethod", formData.paymentMethod);
-      formDataToSend.append(
-        "schedule",
-        JSON.stringify(
-          formData.schedule.map((session) => ({
-            ...session,
-            date:
-              session.date instanceof Date
-                ? session.date.toISOString()
-                : session.date,
-          }))
-        )
-      );
+    // Step 2 submission
 
-      // Then handle receipt separately
-      if (receiptFile) {
-        formDataToSend.append("receipt", receiptFile);
+    if (currentStep === 2) {
+      // Add receipt validation
+      if (!receiptFile) {
+        alert("Please upload payment receipt");
+        return;
       }
 
-      const response = await axios
-        .post(
-          "https://cds-backend.onrender.com/api/enrollments",
+      try {
+        const requiresStudentPermit = ![
+          "TDC (Face to Face)",
+          "OTDC (Self-Paced)",
+        ].includes(selectedCourse);
+
+        if (requiresStudentPermit && !studentPermitFile) {
+          alert("Please upload your Student Permit");
+          return;
+        }
+        const formDataToSend = new FormData();
+        formDataToSend.append("lastName", formData.lastName);
+        formDataToSend.append("firstName", formData.firstName);
+        formDataToSend.append("middleName", formData.middleName);
+        formDataToSend.append("birthdate", formData.birthdate);
+        formDataToSend.append("gender", formData.gender);
+        formDataToSend.append("civilStatus", formData.civilStatus);
+        formDataToSend.append("mobilePhone", formData.mobilePhone);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("course", formData.course);
+        formDataToSend.append("paymentMethod", formData.paymentMethod);
+        formDataToSend.append(
+          "schedule",
+          JSON.stringify(
+            formData.schedule.map((session) => ({
+              ...session,
+              date:
+                session.date instanceof Date
+                  ? session.date.toISOString()
+                  : session.date,
+            }))
+          )
+        );
+
+        // Then handle receipt separately
+        if (receiptFile) {
+          formDataToSend.append("receipt", receiptFile);
+        }
+        if (studentPermitFile)
+          formDataToSend.append("studentPermit", studentPermitFile);
+
+        const response = await axios.post(
+          "http://localhost:3001/api/enrollments",
           formDataToSend,
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           }
-        )
-        .catch((error) => {
-          console.error("Detailed error:", error);
-          alert(`Submission failed: ${error.message}`);
-          throw error;
-        });
+        );
 
-      if (response.data.success) {
-        alert("Enrollment and payment submitted successfully!");
-        // Reset form and step
-        setCurrentStep(1);
-        setFormData({
-          lastName: "",
-          firstName: "",
-          middleName: "",
-          birthdate: "",
-          gender: "",
-          civilStatus: "",
-          mobilePhone: "",
-          email: "",
-          course: selectedCourse,
-          schedule: [],
-          paymentMethod: "gcash",
-        });
-        setReceiptFile(null);
+        if (response.data.success) {
+          alert("Enrollment and payment submitted successfully!");
+          // Reset form
+          setCurrentStep(1);
+          setFormData({
+            lastName: "",
+            firstName: "",
+            middleName: "",
+            birthdate: "",
+            gender: "",
+            civilStatus: "",
+            mobilePhone: "",
+            email: "",
+            course: selectedCourse,
+            schedule: [],
+            paymentMethod: "gcash",
+          });
+          setReceiptFile(null);
+        }
+      } catch (error) {
+        console.error("Submission error:", error);
+        alert(
+          error.response?.data?.error ||
+            error.message ||
+            "Enrollment failed. Please try again."
+        );
       }
-    } catch (error) {
-      console.error("Full error details:", {
-        error: error.response?.data || error.message,
-        config: error.config,
-      });
-      alert(
-        error.response?.data?.error ||
-          error.message ||
-          "Enrollment failed. Please check console for details."
-      );
     }
   };
 
-  const PaymentInstructions = ({ paymentMethod }) => {
+  const PaymentInstructions = ({ paymentMethod, selectedCourse }) => {
+    // Course price configuration
+    const coursePrices = {
+      "TDC (Face to Face)": "₱1,000",
+      "OTDC (Self-Paced)": "₱1,500",
+      "Motorcycle Refresher": "₱2,000",
+      "Motorcycle Beginner": "₱2,500",
+      "MT-Refresher": "₱4,000",
+      "MT-Intermediate": "₱6,000",
+      "MT-Beginner": "₱10,000",
+      "AT-Refresher": "₱5,000",
+      "AT-Intermediate": "₱7,000",
+      "AT-Beginner": "₱12,000",
+    };
+
+    const formatPaymentMethod = {
+      gcash: "Gcash",
+      pay_maya: "PayMaya",
+      bank_transfer: "Bank Transfer",
+    };
+
     const instructions = {
       gcash: {
         steps: [
-          "1. Open GCash app",
+          "1. Open GCash App",
           "2. Go to Send Money",
-          `3. Send to 0912-345-6789 (${formData.firstName} ${formData.lastName})`,
+          `3. Send to 0912-345-6789 (Leonard Joseph Chuidian)`,
           "4. Upload screenshot of transaction below",
         ],
       },
@@ -307,7 +387,7 @@ function EnrollmentForm() {
         steps: [
           "1. Open Maya app",
           "2. Go to Send Money",
-          "3. Send to 0912-345-6789",
+          "3. Send to 0912-345-6789 (Leonard Joseph Chuidian)",
           "4. Upload screenshot of transaction below",
         ],
       },
@@ -316,7 +396,12 @@ function EnrollmentForm() {
     return (
       <div className="payment-instructions card mb-4">
         <div className="card-body">
-          <h5 className="card-title">{paymentMethod} Payment Instructions</h5>
+          <h5 className="card-title theme-payment-title">
+            {formatPaymentMethod[paymentMethod]} Payment Instructions
+            <span className="text-muted ms-2">
+              ({selectedCourse} - {coursePrices[selectedCourse] || "₱---"})
+            </span>
+          </h5>
           <ul className="list-unstyled">
             {instructions[paymentMethod]?.steps.map((step, index) => (
               <li key={index} className="mb-2">
@@ -332,14 +417,16 @@ function EnrollmentForm() {
   return (
     <div className="enrollment-container container py-5">
       <div className="enrollment-header text-center mb-5">
-        <h2 className="fw-bold mb-3">Driving Course Enrollment</h2>
-        <p className="lead text-muted">
+        <h2 className="fw-bold mb-3 theme-heading">
+          Driving Course Enrollment
+        </h2>
+        <p className="lead theme-subheading">
           Start your journey to becoming a confident driver
         </p>
       </div>
 
       {selectedCourse && (
-        <div className="selected-course alert alert-info mb-4">
+        <div className="selected-course alert theme-alert mb-4">
           <strong>Selected Course:</strong> {selectedCourse}
           {courseScheduleConfig[selectedCourse]?.message && (
             <div className="mt-2">
@@ -352,11 +439,11 @@ function EnrollmentForm() {
       <form onSubmit={handleSubmit} className="enrollment-form row g-4">
         {/* Personal Information Section */}
         <div className="col-12 section-header">
-          <h4 className="fw-bold text-primary">
-            <FaUser className="me-2" />
+          <h4 className="fw-bold theme-section-heading">
+            <FaUser className="me-2 theme-icon" />
             Personal Information
           </h4>
-          <hr className="section-divider" />
+          <hr className="theme-divider" />
         </div>
 
         {/* Name Fields */}
@@ -417,12 +504,24 @@ function EnrollmentForm() {
             <span className="input-group-text">
               <FaCalendarAlt />
             </span>
-            <input
-              type="date"
+            <DatePicker
+              selected={
+                formData.birthdate ? new Date(formData.birthdate) : null
+              }
+              onChange={(date) => {
+                const isoDate = date ? date.toISOString().split("T")[0] : "";
+                handleChange({
+                  target: { name: "birthdate", value: isoDate },
+                });
+              }}
+              dateFormat="MMMM d, yyyy"
+              placeholderText="Select birthdate"
               className="form-control"
-              name="birthdate"
-              value={formData.birthdate}
-              onChange={handleChange}
+              maxDate={new Date()}
+              showYearDropdown
+              dropdownMode="select"
+              peekNextMonth
+              showMonthDropdown
               required
             />
           </div>
@@ -464,11 +563,11 @@ function EnrollmentForm() {
 
         {/* Contact Information Section */}
         <div className="col-12 section-header">
-          <h4 className="fw-bold text-primary">
-            <FaPhone className="me-2" />
+          <h4 className="fw-bold theme-section-heading">
+            <FaPhone className="me-2 theme-icon" />
             Contact Information
           </h4>
-          <hr className="section-divider" />
+          <hr className="theme-divider" />
         </div>
 
         <div className="col-md-3 form-group">
@@ -510,11 +609,11 @@ function EnrollmentForm() {
 
         {/* Schedule & Payment Section */}
         <div className="col-12 section-header">
-          <h4 className="fw-bold text-primary">
-            <FaMoneyBillWave className="me-2" />
+          <h4 className="fw-bold theme-section-heading">
+            <FaMoneyBillWave className="me-2 theme-icon" />
             Schedule & Payment
           </h4>
-          <hr className="section-divider" />
+          <hr className="theme-divider" />
         </div>
 
         {scheduleInputs.map((scheduleInput, index) => (
@@ -545,7 +644,6 @@ function EnrollmentForm() {
                     }}
                     filterDate={(date) => {
                       if (selectedCourse === "TDC (Face to Face)") {
-                        // Allow only specified days (Saturday=6, Monday=1)
                         return (
                           date.getDay() ===
                           courseScheduleConfig[selectedCourse].days[index]
@@ -557,6 +655,10 @@ function EnrollmentForm() {
                     placeholderText="Select date"
                     className="form-control"
                     minDate={new Date()}
+                    showYearDropdown
+                    dropdownMode="select"
+                    peekNextMonth
+                    showMonthDropdown
                     required
                   />
                 </div>
@@ -629,15 +731,42 @@ function EnrollmentForm() {
         {currentStep === 2 && (
           <div className="payment-step">
             <div className="col-12 section-header">
-              <h4 className="fw-bold text-primary">
-                <FaMoneyBillWave className="me-2" />
+              <h4 className="fw-bold theme-section-heading">
+                <FaMoneyBillWave className="me-2 theme-icon" />
                 Payment Details
               </h4>
-              <hr className="section-divider" />
+              <hr className="theme-divider" />
             </div>
 
-            <PaymentInstructions paymentMethod={formData.paymentMethod} />
+            <PaymentInstructions
+              paymentMethod={formData.paymentMethod}
+              selectedCourse={selectedCourse}
+            />
 
+            {/* Student Permit Upload */}
+            {!["TDC (Face to Face)", "OTDC (Self-Paced)"].includes(
+              selectedCourse
+            ) && (
+              <div className="col-md-6 form-group">
+                <label className="form-label">Upload Student Permit</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  accept="image/*,.pdf"
+                  onChange={(e) => setStudentPermitFile(e.target.files[0])}
+                  required={
+                    !["TDC (Face to Face)", "OTDC (Self-Paced)"].includes(
+                      selectedCourse
+                    )
+                  }
+                />
+                <small className="text-muted">
+                  (Accepted formats: JPG, PNG, PDF - max 5MB)
+                </small>
+              </div>
+            )}
+
+            {/* Receipt Upload */}
             <div className="col-md-6 form-group">
               <label className="form-label">Upload Payment Receipt</label>
               <input
@@ -655,12 +784,12 @@ function EnrollmentForm() {
             <div className="col-12 text-center mt-4">
               <button
                 type="button"
-                className="btn btn-secondary me-3"
+                className="btn btn-secondary theme-btn-secondary me-3"
                 onClick={() => setCurrentStep(1)}
               >
                 Back
               </button>
-              <button type="submit" className="btn btn-enroll">
+              <button type="submit" className="btn theme-btn-primary">
                 Submit Payment
               </button>
             </div>
@@ -669,7 +798,7 @@ function EnrollmentForm() {
 
         {currentStep === 1 && (
           <div className="col-12 text-center mt-5">
-            <button type="submit" className="btn btn-enroll btn-lg px-5">
+            <button type="submit" className="btn theme-btn-primary btn-lg px-5">
               Next
             </button>
           </div>
