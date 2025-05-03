@@ -78,7 +78,7 @@ const AdminDashboard = () => {
         }
 
         const enrollRes = await fetch(
-          "http://localhost:3001/api/admin/enrollments",
+          "https://cds-backend.onrender.com/api/admin/enrollments",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/admin/enrollments/${selectedEnrollment.id}`,
+        `https://cds-backend.onrender.com/api/admin/enrollments/${selectedEnrollment.id}`,
         {
           method: "PUT",
           headers: {
@@ -143,7 +143,7 @@ const AdminDashboard = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/admin/enrollments/${selectedEnrollment.id}`,
+        `https://cds-backend.onrender.com/api/admin/enrollments/${selectedEnrollment.id}`,
         {
           method: "DELETE",
           headers: {
@@ -300,7 +300,7 @@ const AdminDashboard = () => {
                       {selectedEnrollment?.receipt ? (
                         <>
                           <Image
-                            src={`http://localhost:3001/${selectedEnrollment.receipt.replace(
+                            src={`https://cds-backend.onrender.com/${selectedEnrollment.receipt.replace(
                               /\\/g,
                               "/"
                             )}`}
@@ -331,7 +331,7 @@ const AdminDashboard = () => {
                       {selectedEnrollment?.student_permit ? (
                         <>
                           <Image
-                            src={`http://localhost:3001/${selectedEnrollment.student_permit.replace(
+                            src={`https://cds-backend.onrender.com/${selectedEnrollment.student_permit.replace(
                               /\\/g,
                               "/"
                             )}`}

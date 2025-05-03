@@ -306,7 +306,7 @@ function EnrollmentForm() {
           formDataToSend.append("studentPermit", studentPermitFile);
 
         const response = await axios.post(
-          "http://localhost:3001/api/enrollments",
+          "https://cds-backend.onrender.com/api/enrollments",
           formDataToSend,
           {
             headers: {
