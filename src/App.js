@@ -39,7 +39,7 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <div className="app-container">
-      <Router>
+      <Router Router basename="/">
         <ScrollToTop />
         <Header />
         <div className="navbar-spacer"></div>
