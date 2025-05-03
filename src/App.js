@@ -16,7 +16,6 @@ import AdminDashboard from "./components/AdminDashboard";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// ScrollToTop component moved inside App.js
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -27,10 +26,14 @@ const ScrollToTop = () => {
   return null;
 };
 
-// ProtectedRoute component
 const ProtectedRoute = ({ children }) => {
   const token = sessionStorage.getItem("adminToken");
-  return token ? children : <Navigate to="/admin/login" replace />;
+  const location = useLocation();
+
+  if (!token) {
+    return <Navigate to="/admin/login" state={{ from: location }} replace />;
+  }
+  return children;
 };
 
 function App() {
@@ -49,24 +52,27 @@ function App() {
             <Route path="/enroll" element={<EnrollmentForm />} />
 
             {/* Admin Routes */}
-            <Route
-              path="/admin/login"
-              element={
-                <div className="admin-route-container">
-                  <AdminLogin />
-                </div>
-              }
-            />
-            <Route
-              path="/admin/dashboard"
-              element={
-                <div className="admin-route-container">
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                </div>
-              }
-            />
+            <Route path="/admin">
+              <Route
+                path="login"
+                element={
+                  <div className="admin-route-container">
+                    <AdminLogin />
+                  </div>
+                }
+              />
+              <Route
+                path="dashboard"
+                element={
+                  <div className="admin-route-container">
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  </div>
+                }
+              />
+              <Route index element={<Navigate to="login" replace />} />
+            </Route>
 
             {/* Catch-all route */}
             <Route path="*" element={<Navigate to="/" />} />
