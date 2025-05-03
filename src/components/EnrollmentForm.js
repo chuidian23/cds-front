@@ -316,7 +316,9 @@ function EnrollmentForm() {
         );
 
         if (response.data.success) {
-          alert("Enrollment and payment submitted successfully!");
+          alert(
+            "Thank you for enrolling in Car-vinne Driving School! Our staff will contact you to confirm the payment and the schedule."
+          );
           // Reset form
           setCurrentStep(1);
           setFormData({
