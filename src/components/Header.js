@@ -93,15 +93,33 @@ const Header = () => {
                 <Link className="navLink" to="/">
                   Home
                 </Link>
-                <a className="navLink" href="#about">
+                <Link
+                  className="navLink"
+                  to={{ pathname: "/", hash: "#about" }}
+                  onClick={(e) =>
+                    location.pathname === "/" && e.preventDefault()
+                  }
+                >
                   About Us
-                </a>
-                <a className="navLink" href="#testimonials">
+                </Link>
+                <Link
+                  className="navLink"
+                  to={{ pathname: "/", hash: "#testimonials" }}
+                  onClick={(e) =>
+                    location.pathname === "/" && e.preventDefault()
+                  }
+                >
                   Testimonials
-                </a>
-                <a className="navLink" href="#gallery">
+                </Link>
+                <Link
+                  className="navLink"
+                  to={{ pathname: "/", hash: "#gallery" }}
+                  onClick={(e) =>
+                    location.pathname === "/" && e.preventDefault()
+                  }
+                >
                   Gallery
-                </a>
+                </Link>
                 <Link to="/courses" className="enrollButton ms-lg-3">
                   Enroll Now
                 </Link>

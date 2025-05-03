@@ -1,5 +1,5 @@
-import { useState, React } from "react";
-import { Link } from "react-router-dom";
+import { useState, React, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./HomePage.css";
 import { Container, Row, Col, Modal } from "react-bootstrap";
 import {
@@ -69,6 +69,17 @@ const testimonials = [
 ];
 
 const HomePage = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
