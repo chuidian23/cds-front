@@ -29,7 +29,7 @@ const Footer = () => {
           <div className="col-md-6 text-center text-md-end">
             <div className="social-icons">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/carvinneDS"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
@@ -38,7 +38,7 @@ const Footer = () => {
               </a>
               {/* Changed Instagram to TikTok */}
               <a
-                href="https://tiktok.com"
+                href="https://www.tiktok.com/@carvinnedrivingschool"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
@@ -46,7 +46,7 @@ const Footer = () => {
                 <FaTiktok size={24} />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@Car-vinneDrivingSchool"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"

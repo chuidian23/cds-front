@@ -33,37 +33,37 @@ import student6 from "../assets/images/student6.jpg";
 const testimonials = [
   {
     id: 1,
-    name: "Maria Santos",
+    name: "Flores Ro",
     role: "Student Driver",
-    text: "Car-vinne helped me overcome my fear of driving. The instructors are patient and professional!",
+    text: "Thanks po kau sir John. Galing magturo. talagang papasok sa aming mga utak ang lessons at na may kasamang experiences nya na dagdag kaalaman sa amin at kwela sya walang boring moments, alive and classroom. at syempre mabait din po staff nila. Thanks po.",
     image: testimonial1,
   },
   {
     id: 2,
-    name: "John Dela Cruz",
-    role: "Working Professional",
-    text: "Flexible schedules made it easy to balance work and driving lessons. Highly recommended!",
+    name: "Cherry Wentz",
+    role: "Student Driver",
+    text: "Thank you CAR-VINNE DRIVING SCHOOL! I am confidently driving now. Your staff and instructors are very friendly and accommodating. This driving school is well recommended.👍",
     image: testimonial2,
   },
   {
     id: 3,
-    name: "Sofia Reyes",
-    role: "College Student",
-    text: "Passed my LTO exam on the first try thanks to their comprehensive training program.",
+    name: "Musngi Lh Yn",
+    role: "Student Driver",
+    text: "I highly recommend this CAR-VINNE DRIVING SCHOOL. I learned a lot and they are all kind. Thank you very much to all of you. You are 10 stars for me 🥰🥰🥰🥰",
     image: testimonial3,
   },
   {
     id: 4,
-    name: "Sofia Reyes",
-    role: "College Student",
-    text: "Passed my LTO exam on the first try thanks to their comprehensive training program.",
+    name: "Cheska Gutierrez",
+    role: "Student Driver",
+    text: "This driving school receives a perfect score from me. The entire staff is friendly and responsive. Sir June is a valuable asset. When it comes to driving, I have no experience at all. His patience, expertise, and kindness have inspired me to drive properly and confidently.",
     image: testimonial4,
   },
   {
     id: 5,
-    name: "Sofia Reyes",
-    role: "College Student",
-    text: "Passed my LTO exam on the first try thanks to their comprehensive training program.",
+    name: "Tonie Dizon-Betco",
+    role: "Student Driver",
+    text: "Highly recommended! Everyone in CAR-VINNE DRIVING SCHOOL are very accommodating, helpful and professional. From TDC to PDC very smooth ang process. Special thanks to sir Jhune. Thank you CAR-VINNE Team for your exceptional service. Keep it up!",
     image: testimonial5,
   },
 ];
@@ -206,13 +206,28 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="social-links">
-                  <a href="https://facebook.com" className="mx-3">
+                  <a
+                    href="https://www.facebook.com/carvinneDS"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mx-3"
+                  >
                     <FaFacebook />
                   </a>
-                  <a href="https://tiktok.com" className="mx-3">
+                  <a
+                    href="https://www.tiktok.com/@carvinnedrivingschool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mx-3"
+                  >
                     <FaTiktok />
                   </a>
-                  <a href="https://youtube.com" className="mx-3">
+                  <a
+                    href="https://www.youtube.com/@Car-vinneDrivingSchool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mx-3"
+                  >
                     <FaYoutube />
                   </a>
                 </div>
